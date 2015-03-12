@@ -1394,6 +1394,12 @@ class AdImage(CannotUpdate, AbstractCrudObject):
         open_file.close()
         return return_val
 
+    def remote_delete(self, **kwargs):
+        """Deletes the remote image."""
+        params = dict(kwargs.pop('params', None) or {})
+        params['hash'] = self[self.Field.hash]
+        return super(AdImage, self).remote_delete(params=params, **kwargs)
+
     def get_hash(self):
         """Returns the image hash to which AdCreative's can refer."""
         return self[self.Field.hash]
